@@ -26,11 +26,11 @@
 package org.originmc.cannondebug.cmd;
 
 import org.bukkit.command.CommandSender;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 
 public final class CmdHistory extends CommandExecutor {
 
-    public CmdHistory(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdHistory(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 

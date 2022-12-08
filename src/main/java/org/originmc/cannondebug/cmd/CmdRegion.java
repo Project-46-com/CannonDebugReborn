@@ -25,23 +25,24 @@
 
 package org.originmc.cannondebug.cmd;
 
+import com.sk89q.worldedit.IncompleteRegionException;
+import com.sk89q.worldedit.LocalSession;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
-import com.sk89q.worldedit.bukkit.selections.Selection;
-import org.bukkit.Location;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.Region;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.utils.NumberUtils;
 
-import static org.bukkit.ChatColor.GRAY;
-import static org.bukkit.ChatColor.RED;
-import static org.bukkit.ChatColor.YELLOW;
+import static org.bukkit.ChatColor.*;
 
 public final class CmdRegion extends CommandExecutor {
 
-    public CmdRegion(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdRegion(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 
@@ -56,8 +57,15 @@ public final class CmdRegion extends CommandExecutor {
 
         // Do nothing if selection is not a cuboid.
         WorldEditPlugin worldEdit = (WorldEditPlugin) plugin;
-        Selection selection = worldEdit.getSelection((Player) sender);
-        if (!(selection instanceof CuboidSelection)) {
+        LocalSession playerSession = worldEdit.getSession((Player) sender);
+        Region selection;
+        try {
+            selection = playerSession.getSelection(playerSession.getSelectionWorld());
+        } catch (IncompleteRegionException e) {
+            sender.sendMessage(RED + "Region is incomplete!");
+            return true;
+        }
+        if (!(selection instanceof CuboidRegion)) {
             sender.sendMessage(RED + "Region selected must be a cuboid!");
             return true;
         }
@@ -70,12 +78,12 @@ public final class CmdRegion extends CommandExecutor {
         }
 
         // Handle selection for all blocks within this region.
-        Location max = selection.getMaximumPoint();
-        Location min = selection.getMinimumPoint();
+        BlockVector3 max = selection.getMaximumPoint();
+        BlockVector3 min = selection.getMinimumPoint();
         for (int x = min.getBlockX(); x <= max.getBlockX(); x++) {
             for (int y = min.getBlockY(); y <= max.getBlockY(); y++) {
                 for (int z = min.getBlockZ(); z <= max.getBlockZ(); z++) {
-                    this.plugin.handleSelection(user, max.getWorld().getBlockAt(x, y, z));
+                    this.plugin.handleSelection(user, BukkitAdapter.adapt(playerSession.getSelectionWorld()).getBlockAt(x, y, z));
                 }
             }
         }

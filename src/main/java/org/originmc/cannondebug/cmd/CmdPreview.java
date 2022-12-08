@@ -31,11 +31,11 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.originmc.cannondebug.BlockSelection;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 
 public final class CmdPreview extends CommandExecutor {
 
-    public CmdPreview(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdPreview(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 

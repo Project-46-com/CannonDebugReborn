@@ -25,14 +25,14 @@
 
 package org.originmc.cannondebug.cmd;
 
-import mkremins.fanciful.FancyMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.originmc.cannondebug.BlockSelection;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.EntityTracker;
 import org.originmc.cannondebug.FancyPager;
 import org.originmc.cannondebug.utils.EnumUtils;
+import xyz.fragmentmc.uiwrapper.FancyMessage;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,7 +42,7 @@ import static org.bukkit.ChatColor.*;
 
 public final class CmdHistoryOrder extends CommandExecutor {
 
-    public CmdHistoryOrder(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdHistoryOrder(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 
@@ -62,70 +62,70 @@ public final class CmdHistoryOrder extends CommandExecutor {
             Location initial = tracker.getLocationHistory().get(0);
             Location latest = tracker.getLocationHistory().get(tracker.getLocationHistory().size() - 1);
             lines.add(new FancyMessage("OOE: " + selection.getOrder() + " ")
-                            .color(GRAY)
-                            .formattedTooltip(
-                                    new FancyMessage("Click for all history on this ID.")
-                                            .color(DARK_AQUA)
-                                            .style(BOLD),
+                    .color(GRAY)
+                    .formattedTooltip(
+                            new FancyMessage("Click for all history on this ID.")
+                                    .color(DARK_AQUA)
+                                    .style(BOLD),
 
-                                    new FancyMessage("Spawned tick: ")
-                                            .color(YELLOW)
-                                            .then("" + tracker.getSpawnTick())
-                                            .color(AQUA),
+                            new FancyMessage("Spawned tick: ")
+                                    .color(YELLOW)
+                                    .then("" + tracker.getSpawnTick())
+                                    .color(AQUA),
 
-                                    new FancyMessage("ID: ")
-                                            .color(YELLOW)
-                                            .then("" + selection.getId())
-                                            .color(LIGHT_PURPLE),
+                            new FancyMessage("ID: ")
+                                    .color(YELLOW)
+                                    .then("" + selection.getId())
+                                    .color(LIGHT_PURPLE),
 
-                                    new FancyMessage("Death tick: ")
-                                            .color(YELLOW)
-                                            .then((tracker.getDeathTick() == -1 ? "Still alive" : "" + tracker.getDeathTick()))
-                                            .color(RED),
+                            new FancyMessage("Death tick: ")
+                                    .color(YELLOW)
+                                    .then((tracker.getDeathTick() == -1 ? "Still alive" : "" + tracker.getDeathTick()))
+                                    .color(RED),
 
-                                    new FancyMessage("Cached tick: ")
-                                            .color(YELLOW)
-                                            .then("" + plugin.getCurrentTick())
-                                            .color(GREEN),
+                            new FancyMessage("Cached tick: ")
+                                    .color(YELLOW)
+                                    .then("" + plugin.getCurrentTick())
+                                    .color(GREEN),
 
-                                    new FancyMessage("Initial Location: ")
-                                            .color(YELLOW)
-                                            .then(initial.getBlockX() + " " + initial.getBlockY() + " " + initial.getBlockZ())
-                                            .color(GRAY)
-                            )
+                            new FancyMessage("Initial Location: ")
+                                    .color(YELLOW)
+                                    .then(initial.getBlockX() + " " + initial.getBlockY() + " " + initial.getBlockZ())
+                                    .color(GRAY)
+                    )
 
-                            .command("/cannondebug h i " + selection.getId())
+                    .command("/cannondebug h i " + selection.getId())
 
-                            .then(EnumUtils.getFriendlyName(tracker.getEntityType()))
-                            .color(YELLOW)
+                    .then(EnumUtils.getFriendlyName(tracker.getEntityType()))
+                    .color(YELLOW)
 
-                            .then(" | ")
-                            .color(DARK_GRAY)
+                    .then(" | ")
+                    .color(DARK_GRAY)
 
-                            .then("Last location: ")
-                            .color(WHITE)
+                    .then("Last location: ")
+                    .color(WHITE)
 
-                            .then(latest.getBlockX() + " " + latest.getBlockY() + " " + latest.getBlockZ())
-                            .formattedTooltip(new FancyMessage("Click here to teleport to this location").color(DARK_AQUA).style(BOLD))
-                            .color(RED)
-                            .command("/c tp " + latest.getX() + " " + latest.getY() + " " + latest.getZ())
+                    .then(latest.getBlockX() + " " + latest.getBlockY() + " " + latest.getBlockZ())
+                    .formattedTooltip(new FancyMessage("Click here to teleport to this location").color(DARK_AQUA).style(BOLD))
+                    .color(RED)
+                    .command("/c tp " + latest.getX() + " " + latest.getY() + " " + latest.getZ())
 
-                            .then(" | [")
-                            .color(DARK_GRAY)
+                    .then(" | [")
+                    .color(DARK_GRAY)
 
-                            .then("Pos")
-                            .formattedTooltip(
-                                    new FancyMessage("Clicking this will allow you to copy the location."),
-                                    new FancyMessage("It will suggest a command from there you can copy it with ")
+                    .then("Pos")
+                    .formattedTooltip(
+                            new FancyMessage("Clicking this will allow you to copy the location."),
+                            new FancyMessage("It will suggest a command from there you can copy it with ")
                                     .color(WHITE)
                                     .then("CTRL + C")
                                     .color(LIGHT_PURPLE)
-                            )
-                            .color(AQUA)
-                            .suggest(latest.getX() + " " + latest.getY() + " " + latest.getZ())
+                    )
+                    .color(AQUA)
+                    .suggest(latest.getX() + " " + latest.getY() + " " + latest.getZ())
 
-                            .then("]")
-                            .color(DARK_GRAY)
+                    .then("]")
+                    .color(DARK_GRAY)
             );
         }
 

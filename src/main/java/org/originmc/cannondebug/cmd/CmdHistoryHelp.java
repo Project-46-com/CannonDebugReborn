@@ -25,14 +25,12 @@
 
 package org.originmc.cannondebug.cmd;
 
-import mkremins.fanciful.FancyMessage;
 import org.bukkit.command.CommandSender;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.FancyPager;
+import xyz.fragmentmc.uiwrapper.FancyMessage;
 
 import static org.bukkit.ChatColor.*;
-import static org.bukkit.ChatColor.AQUA;
-import static org.bukkit.ChatColor.YELLOW;
 
 public final class CmdHistoryHelp extends CommandExecutor {
 
@@ -44,7 +42,7 @@ public final class CmdHistoryHelp extends CommandExecutor {
             new FancyMessage("/c h t,tick ").color(AQUA).then("[tick] ").color(DARK_AQUA).then("View all history in a server tick.").color(YELLOW)
     });
 
-    public CmdHistoryHelp(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdHistoryHelp(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 

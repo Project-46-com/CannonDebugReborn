@@ -30,14 +30,14 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.originmc.cannondebug.BlockSelection;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 
 import java.util.Iterator;
 import java.util.List;
 
 public final class CmdClear extends CommandExecutor {
 
-    public CmdClear(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdClear(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 

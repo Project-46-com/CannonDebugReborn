@@ -26,13 +26,13 @@
 package org.originmc.cannondebug.cmd;
 
 import org.bukkit.command.CommandSender;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.FancyPager;
 import org.originmc.cannondebug.utils.NumberUtils;
 
 public final class CmdPage extends CommandExecutor {
 
-    public CmdPage(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdPage(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 

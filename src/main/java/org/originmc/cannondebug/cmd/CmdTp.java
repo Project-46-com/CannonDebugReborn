@@ -5,14 +5,14 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.originmc.cannondebug.BlockSelection;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.EntityTracker;
 import org.originmc.cannondebug.utils.NumberUtils;
 import org.originmc.cannondebug.utils.PlotSquared;
 
 public class CmdTp extends CommandExecutor {
 
-    public CmdTp(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdTp(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 
@@ -21,10 +21,10 @@ public class CmdTp extends CommandExecutor {
         if (args.length != 4) return false;
 
         Location location = new Location(
-                 user.getBase().getWorld(),
-                 NumberUtils.parseDouble(args[1]),
-                 NumberUtils.parseDouble(args[2]),
-                 NumberUtils.parseDouble(args[3])
+                user.getBase().getWorld(),
+                NumberUtils.parseDouble(args[1]),
+                NumberUtils.parseDouble(args[2]),
+                NumberUtils.parseDouble(args[3])
         );
 
         // First we need to verify this user has tracked an entity to the provided location

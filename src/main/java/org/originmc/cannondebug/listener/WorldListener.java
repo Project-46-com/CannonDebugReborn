@@ -14,24 +14,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.material.Dispenser;
-import org.bukkit.util.Vector;
 import org.originmc.cannondebug.BlockSelection;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.EntityTracker;
 import org.originmc.cannondebug.User;
-import org.originmc.cannondebug.utils.Configuration;
 
 import java.util.List;
 
-import static org.originmc.cannondebug.utils.MaterialUtils.isDispenser;
-import static org.originmc.cannondebug.utils.MaterialUtils.isExplosives;
-import static org.originmc.cannondebug.utils.MaterialUtils.isStacker;
+import static org.originmc.cannondebug.utils.MaterialUtils.*;
 
 public class WorldListener implements Listener {
 
-    private final CannonDebugPlugin plugin;
+    private final CannonDebugRebornPlugin plugin;
 
-    public WorldListener(CannonDebugPlugin plugin) {
+    public WorldListener(CannonDebugRebornPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -44,9 +40,7 @@ public class WorldListener implements Listener {
         for (World world : Bukkit.getWorlds()) {
             List<Entity> entities = world.getEntities();
 
-            for (int i = 0, entitiesSize = entities.size(); i < entitiesSize; i++) {
-                Entity entity = entities.get(i);
-
+            for (Entity entity : entities) {
                 if (entity.getTicksLived() != 1) {
                     continue;
                 }
@@ -58,10 +52,8 @@ public class WorldListener implements Listener {
 
     private void track(Entity entity) {
         Location sourceLocation;
-        if (entity instanceof TNTPrimed) {
-            sourceLocation = ((TNTPrimed) entity).getSourceLoc();
-        } else if (entity instanceof FallingBlock) {
-            sourceLocation = ((FallingBlock) entity).getSourceLoc();
+        if (entity instanceof TNTPrimed || entity instanceof FallingBlock) {
+            sourceLocation = entity.getOrigin();
         } else {
             return;
         }

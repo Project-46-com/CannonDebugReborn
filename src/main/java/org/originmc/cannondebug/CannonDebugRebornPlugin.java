@@ -27,17 +27,12 @@ package org.originmc.cannondebug;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.originmc.cannondebug.cmd.CommandType;
 import org.originmc.cannondebug.listener.PlayerListener;
@@ -47,20 +42,11 @@ import org.originmc.cannondebug.utils.EnumUtils;
 import org.originmc.cannondebug.utils.MaterialUtils;
 import org.originmc.cannondebug.utils.NumberUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-import static org.bukkit.ChatColor.BOLD;
-import static org.bukkit.ChatColor.GRAY;
-import static org.bukkit.ChatColor.GREEN;
-import static org.bukkit.ChatColor.RED;
-import static org.bukkit.ChatColor.WHITE;
+import static org.bukkit.ChatColor.*;
 
-public final class CannonDebugPlugin extends JavaPlugin implements Runnable {
+public final class CannonDebugRebornPlugin extends JavaPlugin implements Runnable {
 
     @Getter
     private final Map<UUID, User> users = new HashMap<>();
@@ -171,7 +157,7 @@ public final class CannonDebugPlugin extends JavaPlugin implements Runnable {
             // Update users preview.
             if (user.isPreviewing()) {
                 getServer().getScheduler().runTask(this, () ->
-                        player.sendBlockChange(block.getLocation(), block.getType(), block.getData()));
+                        player.sendBlockChange(block.getLocation(), block.getBlockData()));
             }
             return;
         }
@@ -186,7 +172,7 @@ public final class CannonDebugPlugin extends JavaPlugin implements Runnable {
         // Update users preview.
         if (user.isPreviewing()) {
             getServer().getScheduler().runTask(this, () ->
-                    player.sendBlockChange(block.getLocation(), Material.EMERALD_BLOCK, (byte) 0));
+                    player.sendBlockChange(block.getLocation(), Material.EMERALD_BLOCK.createBlockData()));
         }
 
         // Add the selected location.

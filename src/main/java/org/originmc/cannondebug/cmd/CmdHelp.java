@@ -25,10 +25,10 @@
 
 package org.originmc.cannondebug.cmd;
 
-import mkremins.fanciful.FancyMessage;
 import org.bukkit.command.CommandSender;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.FancyPager;
+import xyz.fragmentmc.uiwrapper.FancyMessage;
 
 import static org.bukkit.ChatColor.*;
 
@@ -53,7 +53,7 @@ public final class CmdHelp extends CommandExecutor {
                     "via lookup commands. Profiling information is then indexed, to be clear and easy to use.").color(GREEN)
     });
 
-    public CmdHelp(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdHelp(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 

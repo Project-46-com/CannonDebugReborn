@@ -67,7 +67,7 @@ public final class MaterialUtils {
      * selection mode.
      *
      * @param material the material to identify.
-     * @param flag if we should check explosives.
+     * @param flag     if we should check explosives.
      * @return true if material can be selected.
      */
     public static boolean isSelectable(Material material, boolean flag) {

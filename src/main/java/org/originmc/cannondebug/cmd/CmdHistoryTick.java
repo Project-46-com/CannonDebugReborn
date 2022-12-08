@@ -25,16 +25,16 @@
 
 package org.originmc.cannondebug.cmd;
 
-import mkremins.fanciful.FancyMessage;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.Vector;
 import org.originmc.cannondebug.BlockSelection;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.EntityTracker;
 import org.originmc.cannondebug.FancyPager;
 import org.originmc.cannondebug.utils.EnumUtils;
 import org.originmc.cannondebug.utils.NumberUtils;
+import xyz.fragmentmc.uiwrapper.FancyMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ import static org.bukkit.ChatColor.*;
 
 public final class CmdHistoryTick extends CommandExecutor {
 
-    public CmdHistoryTick(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CmdHistoryTick(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         super(plugin, sender, args, permission);
     }
 
@@ -73,109 +73,109 @@ public final class CmdHistoryTick extends CommandExecutor {
             Location location = tracker.getLocationHistory().get(relativeTick);
             Vector velocity = tracker.getVelocityHistory().get(relativeTick);
             FancyMessage message = new FancyMessage("ID: " + selection.getId() + " ")
-                            .color(GRAY)
-                            .formattedTooltip(
-                                    new FancyMessage("Click for all history on this ID.")
-                                            .color(DARK_AQUA)
-                                            .style(BOLD),
+                    .color(GRAY)
+                    .formattedTooltip(
+                            new FancyMessage("Click for all history on this ID.")
+                                    .color(DARK_AQUA)
+                                    .style(BOLD),
 
-                                    new FancyMessage("Spawned tick: ")
-                                            .color(YELLOW)
-                                            .then("" + tracker.getSpawnTick())
-                                            .color(AQUA),
+                            new FancyMessage("Spawned tick: ")
+                                    .color(YELLOW)
+                                    .then("" + tracker.getSpawnTick())
+                                    .color(AQUA),
 
-                                    new FancyMessage("Order: ")
-                                            .color(YELLOW)
-                                            .then("" + selection.getOrder())
-                                            .color(LIGHT_PURPLE),
+                            new FancyMessage("Order: ")
+                                    .color(YELLOW)
+                                    .then("" + selection.getOrder())
+                                    .color(LIGHT_PURPLE),
 
-                                    new FancyMessage("Death tick: ")
-                                            .color(YELLOW)
-                                            .then((tracker.getDeathTick() == -1 ? "Still alive" : "" + tracker.getDeathTick()))
-                                            .color(RED),
+                            new FancyMessage("Death tick: ")
+                                    .color(YELLOW)
+                                    .then((tracker.getDeathTick() == -1 ? "Still alive" : "" + tracker.getDeathTick()))
+                                    .color(RED),
 
-                                    new FancyMessage("Cached tick: ")
-                                            .color(YELLOW)
-                                            .then("" + plugin.getCurrentTick())
-                                            .color(GREEN),
+                            new FancyMessage("Cached tick: ")
+                                    .color(YELLOW)
+                                    .then("" + plugin.getCurrentTick())
+                                    .color(GREEN),
 
-                                    new FancyMessage("Initial Location: ")
-                                            .color(YELLOW)
-                                            .then(initial.getBlockX() + " " + initial.getBlockY() + " " + initial.getBlockZ())
-                                            .color(GRAY)
-                            )
+                            new FancyMessage("Initial Location: ")
+                                    .color(YELLOW)
+                                    .then(initial.getBlockX() + " " + initial.getBlockY() + " " + initial.getBlockZ())
+                                    .color(GRAY)
+                    )
 
-                            .command("/cannondebug h i " + selection.getId())
+                    .command("/cannondebug h i " + selection.getId())
 
-                            .then(EnumUtils.getFriendlyName(tracker.getEntityType()))
-                            .color(YELLOW)
+                    .then(EnumUtils.getFriendlyName(tracker.getEntityType()))
+                    .color(YELLOW)
 
-                            .then(" | ")
-                            .color(DARK_GRAY)
+                    .then(" | ")
+                    .color(DARK_GRAY)
 
-                            .then("Hover for location and velocity")
-                            .color(WHITE)
-                            .formattedTooltip(
-                                    new FancyMessage("Click here to teleport to this location").color(DARK_AQUA).style(BOLD),
-                                    new FancyMessage("LOCATION").color(YELLOW).style(BOLD),
-                                    new FancyMessage("X: ").color(WHITE).then("" + location.getX()).color(RED),
-                                    new FancyMessage("Y: ").color(WHITE).then("" + location.getY()).color(RED),
-                                    new FancyMessage("Z: ").color(WHITE).then("" + location.getZ()).color(RED),
-                                    new FancyMessage(""),
-                                    new FancyMessage("VELOCITY").color(YELLOW).style(BOLD),
-                                    new FancyMessage("X: ").color(WHITE).then("" + velocity.getX()).color(RED),
-                                    new FancyMessage("Y: ").color(WHITE).then("" + velocity.getY()).color(RED),
-                                    new FancyMessage("Z: ").color(WHITE).then("" + velocity.getZ()).color(RED)
-                            )
-                            .command("/c tp " + location.getX() + " " + location.getY() + " " + location.getZ())
+                    .then("Hover for location and velocity")
+                    .color(WHITE)
+                    .formattedTooltip(
+                            new FancyMessage("Click here to teleport to this location").color(DARK_AQUA).style(BOLD),
+                            new FancyMessage("LOCATION").color(YELLOW).style(BOLD),
+                            new FancyMessage("X: ").color(WHITE).then("" + location.getX()).color(RED),
+                            new FancyMessage("Y: ").color(WHITE).then("" + location.getY()).color(RED).then("(Eye: " + location.getY() + 0.833 + ")").color(GRAY),
+                            new FancyMessage("Z: ").color(WHITE).then("" + location.getZ()).color(RED),
+                            new FancyMessage(""),
+                            new FancyMessage("VELOCITY").color(YELLOW).style(BOLD),
+                            new FancyMessage("X: ").color(WHITE).then("" + velocity.getX()).color(RED),
+                            new FancyMessage("Y: ").color(WHITE).then("" + velocity.getY()).color(RED),
+                            new FancyMessage("Z: ").color(WHITE).then("" + velocity.getZ()).color(RED)
+                    )
+                    .command("/c tp " + location.getX() + " " + location.getY() + " " + location.getZ())
 
-                            .then(" | [")
-                            .color(DARK_GRAY)
+                    .then(" | [")
+                    .color(DARK_GRAY)
 
-                            .then("P")
-                            .formattedTooltip(
-                                    new FancyMessage("Clicking this will allow you to copy the location."),
-                                    new FancyMessage("It will suggest a command from there you can copy it with ")
+                    .then("P")
+                    .formattedTooltip(
+                            new FancyMessage("Clicking this will allow you to copy the location."),
+                            new FancyMessage("It will suggest a command from there you can copy it with ")
                                     .color(WHITE)
                                     .then("CTRL + C")
                                     .color(LIGHT_PURPLE)
-                            )
-                            .color(AQUA)
-                            .suggest(location.getX() + " " + location.getY() + " " + location.getZ())
+                    )
+                    .color(AQUA)
+                    .suggest(location.getX() + " " + location.getY() + " " + location.getZ())
 
-                            .then("M")
-                            .formattedTooltip(
-                                    new FancyMessage("Clicking this will allow you to copy the velocity."),
-                                    new FancyMessage("It will suggest a command from there you can copy it with ")
+                    .then("M")
+                    .formattedTooltip(
+                            new FancyMessage("Clicking this will allow you to copy the velocity."),
+                            new FancyMessage("It will suggest a command from there you can copy it with ")
                                     .color(WHITE)
                                     .then("CTRL + C")
                                     .color(AQUA)
-                            )
-                            .color(LIGHT_PURPLE)
-                            .suggest(velocity.getX() + " " + velocity.getY() + " " + velocity.getZ());
+                    )
+                    .color(LIGHT_PURPLE)
+                    .suggest(velocity.getX() + " " + velocity.getY() + " " + velocity.getZ());
 
             if (NumberUtils.isInsideCube(location.getX()) && NumberUtils.isInsideCube(location.getZ()) ||
-                Math.abs(velocity.getX()) != 0.0 && NumberUtils.isInsideCube(location.getX()) ||
-                Math.abs(velocity.getZ()) != 0.0 && NumberUtils.isInsideCube(location.getZ())) {
+                    Math.abs(velocity.getX()) != 0.0 && NumberUtils.isInsideCube(location.getX()) ||
+                    Math.abs(velocity.getZ()) != 0.0 && NumberUtils.isInsideCube(location.getZ())) {
                 message.then("X")
-                       .color(GREEN)
-                       .formattedTooltip(new FancyMessage("This location is within a block on the x or z axis"));
+                        .color(GREEN)
+                        .formattedTooltip(new FancyMessage("This location is within a block on the x or z axis"));
             }
 
             if (NumberUtils.isInsideCube(location.getY() + (double) 0.49F)) {
                 message.then("Y")
-                       .color(RED)
-                       .formattedTooltip(new FancyMessage("This location is within a block on y axis"));
+                        .color(RED)
+                        .formattedTooltip(new FancyMessage("This location is within a block on y axis"));
             }
 
             if (Math.sqrt(velocity.getX() * velocity.getX() + velocity.getY() * velocity.getY() + velocity.getZ() * velocity.getZ()) >= 8.0D) {
                 message.then("M")
-                       .color(YELLOW)
-                       .formattedTooltip(new FancyMessage("This entity is moving fast [>= 8.0, cannot swing]"));
+                        .color(YELLOW)
+                        .formattedTooltip(new FancyMessage("This entity is moving fast [>= 8.0, cannot swing]"));
             }
 
             message.then("]")
-                   .color(DARK_GRAY);
+                    .color(DARK_GRAY);
 
             lines.add(message);
         }

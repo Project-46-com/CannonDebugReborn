@@ -1,30 +1,31 @@
-# CannonDebug
+# CannonDebugReborn
 
-*Best cannon debugger out there!*
+*Classic CannonDebug ported to modern minecraft versions!*
 
 ## Supports
 
-* WorldEdit 5.x -> 6.x
-* CraftBukkit & Spigot 1.7.9 -> 1.8.8
+* WorldEdit 7
+* PlotSquared 6
+* Paper & Forks 1.19.x
 
 ## Features
 
 * Per user cannon logging
 * Select which dispensers and sand blocks to log
-  * Click the blocks you wish to log with "/c select"
-  * WorldEdit selection support with "/c region"
-  * Selections can be viewed in game with "/c view"
+    * Click the blocks you wish to log with "/c select"
+    * WorldEdit selection support with "/c region"
+    * Selections can be viewed in game with "/c view"
 * Provides a unique ID per dispenser and sand block tracked
 * Logs locations and velocities for TnT and sand every tick
 * Caches and indexes all cannoning debug information
 * Interactive and helpful listing GUI
 * Sort and filter information by
-  * Server tick
-  * Entities' selection ID
+    * Server tick
+    * Entities' selection ID
 
 ## Download
 
-[Obtain the latest compiled version of CannonDebug here](https://github.com/OriginFactions/CannonDebug/raw/master/target/CannonDebug.jar)
+[Obtain the latest compiled version of CannonDebugReborn here](https://github.com/FragmentMC/CannonDebugReborn/releases/latest)
 
 ## Installation
 
@@ -51,12 +52,6 @@
 | cannondebug.preview                 | Preview all selected blocks for profiling                 | everyone       |
 | cannondebug.region                  | Use the region selector tool utilizing WorldEdit          | everyone       |
 | cannondebug.select                  | Use the hand selector tool                                | everyone       |
-
-## Contributing
-
-* 4-space indentation
-* UNIX line endings
-* Braces on the same line
 
 ## License
 

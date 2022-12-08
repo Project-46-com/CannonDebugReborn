@@ -26,7 +26,7 @@
 package org.originmc.cannondebug;
 
 import lombok.Data;
-import mkremins.fanciful.FancyMessage;
+import xyz.fragmentmc.uiwrapper.FancyMessage;
 
 import static org.bukkit.ChatColor.*;
 

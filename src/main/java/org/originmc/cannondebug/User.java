@@ -27,10 +27,6 @@ package org.originmc.cannondebug;
 
 import lombok.Data;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

@@ -25,17 +25,17 @@
 
 package org.originmc.cannondebug.cmd;
 
-import mkremins.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.FancyPager;
 import org.originmc.cannondebug.User;
+import xyz.fragmentmc.uiwrapper.FancyMessage;
 
 public abstract class CommandExecutor {
 
-    public final CannonDebugPlugin plugin;
+    public final CannonDebugRebornPlugin plugin;
 
     public final CommandSender sender;
 
@@ -45,7 +45,7 @@ public abstract class CommandExecutor {
 
     public User user = null;
 
-    public CommandExecutor(CannonDebugPlugin plugin, CommandSender sender, String[] args, String permission) {
+    public CommandExecutor(CannonDebugRebornPlugin plugin, CommandSender sender, String[] args, String permission) {
         this.plugin = plugin;
         this.sender = sender;
         this.args = args;
@@ -86,7 +86,7 @@ public abstract class CommandExecutor {
      * Sends command sender a fancy pager message.
      *
      * @param pager the fancy pager instance to send.
-     * @param page the page to send to the player.
+     * @param page  the page to send to the player.
      */
     public void send(FancyPager pager, int page) {
         for (FancyMessage message : pager.getPage(page)) {
@@ -103,6 +103,7 @@ public abstract class CommandExecutor {
 
     /**
      * Executes the command.
+     *
      * @return true if valid command, otherwise false.
      */
     public abstract boolean perform();

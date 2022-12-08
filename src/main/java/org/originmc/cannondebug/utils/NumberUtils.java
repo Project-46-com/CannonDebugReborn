@@ -65,7 +65,7 @@ public final class NumberUtils {
      * of a permissible.
      *
      * @param permissible the permissible to check for permissions.
-     * @param permission the start of the permission string.
+     * @param permission  the start of the permission string.
      * @return highest value that begins with permission string.
      */
     public static int getNumericalPerm(Permissible permissible, String permission) {

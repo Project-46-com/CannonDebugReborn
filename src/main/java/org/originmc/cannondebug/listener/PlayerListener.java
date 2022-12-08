@@ -9,14 +9,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.originmc.cannondebug.CannonDebugPlugin;
+import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.User;
 
 public class PlayerListener implements Listener {
 
-    private final CannonDebugPlugin plugin;
+    private final CannonDebugRebornPlugin plugin;
 
-    public PlayerListener(CannonDebugPlugin plugin) {
+    public PlayerListener(CannonDebugRebornPlugin plugin) {
         this.plugin = plugin;
     }
 
