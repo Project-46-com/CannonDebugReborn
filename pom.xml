@@ -70,7 +70,7 @@
         </repository>
         <repository>
             <id>enginehub</id>
-            <url>https://maven.enginehub.org/repo</url>
+            <url>https://maven.enginehub.org/repo/</url>
         </repository>
     </repositories>
 
@@ -78,8 +78,8 @@
         <dependencies>
             <dependency>
                 <groupId>com.intellectualsites.bom</groupId>
-                <artifactId>bom-1.18.x</artifactId>
-                <version>1.20</version>
+                <artifactId>bom-newest</artifactId>
+                <version>1.51</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -88,44 +88,42 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.papermc.paper</groupId>
-            <artifactId>paper-api</artifactId>
-            <version>1.20.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.plotsquared</groupId>
-            <artifactId>PlotSquared-Core</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q.worldedit</groupId>
-            <artifactId>worldedit-bukkit</artifactId>
-            <version>7.2.15-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.plotsquared</groupId>
-            <artifactId>PlotSquared-Bukkit</artifactId>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>PlotSquared-Core</artifactId>
-                    <groupId>*</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.intellectualsites.plotsquared</groupId>
+            <artifactId>plotsquared-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fastasyncworldedit</groupId>
+            <artifactId>FastAsyncWorldEdit-Core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
-            <version>4.13.0</version>
+            <version>4.18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fastasyncworldedit</groupId>
+            <artifactId>FastAsyncWorldEdit-Bukkit</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>FastAsyncWorldEdit-Core</artifactId>
+                    <groupId>*</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
-
 </project>

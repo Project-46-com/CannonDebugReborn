@@ -80,9 +80,9 @@ public final class CmdRegion extends CommandExecutor {
         // Handle selection for all blocks within this region.
         BlockVector3 max = selection.getMaximumPoint();
         BlockVector3 min = selection.getMinimumPoint();
-        for (int x = min.getBlockX(); x <= max.getBlockX(); x++) {
-            for (int y = min.getBlockY(); y <= max.getBlockY(); y++) {
-                for (int z = min.getBlockZ(); z <= max.getBlockZ(); z++) {
+        for (int x = min.x(); x <= max.x(); x++) {
+            for (int y = min.x(); y <= max.x(); y++) {
+                for (int z = min.x(); z <= max.x(); z++) {
                     this.plugin.handleSelection(user, BukkitAdapter.adapt(playerSession.getSelectionWorld()).getBlockAt(x, y, z));
                 }
             }

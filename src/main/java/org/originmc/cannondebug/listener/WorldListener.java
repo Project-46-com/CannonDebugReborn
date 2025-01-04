@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.TNTPrimed;
@@ -13,7 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.material.Dispenser;
+import org.bukkit.block.Dispenser;
 import org.originmc.cannondebug.BlockSelection;
 import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.EntityTracker;
@@ -112,13 +114,20 @@ public class WorldListener implements Listener {
                 event.setCancelled(true);
 
                 // Shoot a new falling block with the exact same properties as current.
-                BlockFace face = ((Dispenser) block.getState().getData()).getFacing();
-                Location location = block.getLocation().clone();
-                location.add(face.getModX() + 0.5, face.getModY(), face.getModZ() + 0.5);
-                TNTPrimed tnt = block.getWorld().spawn(location, TNTPrimed.class);
-                tracker = new EntityTracker(tnt.getType(), plugin.getCurrentTick());
-                tracker.setEntity(tnt);
-                plugin.getActiveTrackers().add(tracker);
+                BlockData blockData = block.getBlockData();
+                if (blockData instanceof Directional) {
+                    Directional directional = (Directional) blockData;
+                    BlockFace blockFace = directional.getFacing();
+
+                    Location location = block.getLocation().clone();
+                    location.add(blockFace.getModX() + 0.5, blockFace.getModY(), blockFace.getModZ() + 0.5);
+
+                    TNTPrimed tnt = block.getWorld().spawn(location, TNTPrimed.class);
+
+                    tracker = new EntityTracker(tnt.getType(), plugin.getCurrentTick());
+                    tracker.setEntity(tnt);
+                    plugin.getActiveTrackers().add(tracker);
+                }
             }
 
             // Update order
