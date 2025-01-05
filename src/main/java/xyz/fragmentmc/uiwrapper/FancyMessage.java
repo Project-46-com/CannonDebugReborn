@@ -6,8 +6,15 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyFormat;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.BlockDisplay;
+import org.bukkit.util.Transformation;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -116,5 +123,34 @@ public class FancyMessage {
 
     private void append(TextComponent component) {
         this.textComponent = this.textComponent.append(component);
+    }
+
+
+    public void visualiseLocation(Location location) {
+        location = location.clone().add(0.5, 0.5, 0.5);
+
+        int size = 3;
+        int half = size / 2;
+
+        for (int x = -half; x <= half; x++) {
+            for (int y = -half; y <= half; y++) {
+                for (int z = -half; z <= half; z++) {
+                    if (Math.abs(x) == half || Math.abs(y) == half || Math.abs(z) == half) {
+                        Location blockLocation = location.clone().add(x, y, z);
+                        BlockDisplay blockDisplay = (BlockDisplay) blockLocation.getWorld().spawn(blockLocation, BlockDisplay.class);
+
+                        blockDisplay.setBlock(Bukkit.createBlockData(Material.GOLD_BLOCK));
+
+                        Transformation transformation = new Transformation(
+                                new Vector3f(0, 0, 0),
+                                new Quaternionf(),
+                                new Vector3f(0.9f, 0.9f, 0.9f),
+                                new Quaternionf()
+                        );
+                        blockDisplay.setTransformation(transformation);
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,9 +1,12 @@
 package org.originmc.cannondebug.cmd;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Transformation;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.originmc.cannondebug.BlockSelection;
 import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.EntityTracker;
@@ -47,6 +50,9 @@ public class CmdTp extends CommandExecutor {
                 location.setPitch(current.getPitch());
                 location.setYaw(current.getYaw());
                 user.getBase().teleport(location);
+
+                visualiseLocation(location);
+
             } else {
                 player.sendMessage(ChatColor.RED + "You cannot teleport here.");
             }
@@ -57,5 +63,22 @@ public class CmdTp extends CommandExecutor {
         return false;
     }
 
+    public void visualiseLocation(Location location) {
 
+        BlockDisplay blockDisplay = (BlockDisplay) location.getWorld().spawn(location, BlockDisplay.class);
+
+        blockDisplay.setBlock(Bukkit.createBlockData(Material.TNT));
+
+        Transformation transformation = new Transformation(
+                new Vector3f(0, 0, 0),
+                new Quaternionf(0, 0, 0, 0),
+                new Vector3f(1.0f, 1.0f, 1.0f),
+                new Quaternionf(0, 0, 0, 0)
+        );
+        blockDisplay.setTransformation(transformation);
+        blockDisplay.setRotation(0, 0);
+
+        blockDisplay.setGlowing(true);
+        blockDisplay.setGlowColorOverride(Color.RED);
+    }
 }
