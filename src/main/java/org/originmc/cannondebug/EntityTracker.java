@@ -27,6 +27,7 @@ package org.originmc.cannondebug;
 
 import lombok.Data;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.util.Vector;
@@ -39,6 +40,7 @@ public final class EntityTracker {
 
     private final EntityType entityType;
 
+
     private final long spawnTick;
 
     private final List<Location> locationHistory = new ArrayList<>();
@@ -48,5 +50,6 @@ public final class EntityTracker {
     private long deathTick = -1;
 
     private Entity entity;
+
 
 }

@@ -29,6 +29,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -47,6 +48,12 @@ import java.util.*;
 import static org.bukkit.ChatColor.*;
 
 public final class CannonDebugRebornPlugin extends JavaPlugin implements Runnable {
+
+    @Getter
+    private NamespacedKey debugKey;
+
+    @Getter
+    private static CannonDebugRebornPlugin instance;
 
     @Getter
     private final Map<UUID, User> users = new HashMap<>();
@@ -76,6 +83,8 @@ public final class CannonDebugRebornPlugin extends JavaPlugin implements Runnabl
 
     @Override
     public void onEnable() {
+        instance = this;
+        this.debugKey = new NamespacedKey(this, "debug-visualiser");
         configuration = new Configuration(this);
         configuration.loadConfiguration();
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);

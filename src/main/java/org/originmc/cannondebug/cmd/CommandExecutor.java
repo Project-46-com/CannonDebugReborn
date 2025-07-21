@@ -101,6 +101,20 @@ public abstract class CommandExecutor {
         user.setPager(pager);
     }
 
+    public static void send(CommandSender sender, FancyPager pager, int page) {
+        for (FancyMessage message : pager.getPage(page)) {
+            // Send empty messages if null.
+            if (message == null) {
+                sender.sendMessage("");
+                continue;
+            }
+            message.send(sender);
+        }
+
+        User user  = CannonDebugRebornPlugin.getInstance().getUser(((Player) sender).getUniqueId());
+        user.setPager(pager);
+    }
+
     /**
      * Executes the command.
      *

@@ -41,6 +41,7 @@ public final class CmdClear extends CommandExecutor {
         super(plugin, sender, args, permission);
     }
 
+    // c c h
     @Override
     public boolean perform() {
         // Do nothing if not enough arguments.

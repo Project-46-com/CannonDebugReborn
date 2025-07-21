@@ -1,16 +1,26 @@
 package org.originmc.cannondebug.listener;
 
+import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.originmc.cannondebug.BlockSelection;
 import org.originmc.cannondebug.CannonDebugRebornPlugin;
+import org.originmc.cannondebug.FancyPager;
 import org.originmc.cannondebug.User;
+import org.originmc.cannondebug.cmd.CmdHistoryID;
+import org.originmc.cannondebug.cmd.CommandExecutor;
+import org.originmc.cannondebug.utils.DisplayCreatorBuilder;
+import xyz.fragmentmc.uiwrapper.FancyMessage;
 
 public class PlayerListener implements Listener {
 
@@ -70,6 +80,18 @@ public class PlayerListener implements Listener {
         // Do nothing if the block is not selectable.
         Block block = event.getClickedBlock();
         plugin.handleSelection(user, block);
+    }
+
+    @EventHandler
+    public void interactVisual(PlayerInteractEntityEvent event) {
+        System.out.println("here");
+        Entity entity = event.getRightClicked();
+        Pair<BlockSelection, Integer> result = DisplayCreatorBuilder.selectionFromEntity(CannonDebugRebornPlugin.getInstance(), entity);
+
+        FancyMessage message = CmdHistoryID.getTickMessage(result.first(), result.first().getTracker().getLocationHistory().getFirst(), result.first().getTracker(), result.right());
+
+        FancyPager pager = new FancyPager("History for selection ID: " + result.first().getId(), new FancyMessage[]{message});
+        CommandExecutor.send(event.getPlayer(), pager, 0);
     }
 
 }
