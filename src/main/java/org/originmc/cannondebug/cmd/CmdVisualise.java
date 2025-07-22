@@ -29,40 +29,62 @@ public class CmdVisualise extends CommandExecutor {
         // Do nothing if not enough arguments.
         if (args.length == 1) return false;
 
+        boolean allSelections = args[1].equalsIgnoreCase("all");
+
         int id = Math.abs(NumberUtils.parseInt(args[1]));
 
+
+        // TDOD make this better
+        int tick = -1; // All ticks
+        int lifespan = 80;
+        if (args.length >= 3) {
+            tick = Math.abs(NumberUtils.parseInt(args[2]));
+        }
+        if (args.length >= 4) {
+            lifespan = Math.abs(NumberUtils.parseInt(args[3]));
+        }
+
+        // All selections
+        if (id == 0 && allSelections) {
+            for (BlockSelection selection : user.getSelections()) {
+                display(selection, tick, lifespan, plugin, player);
+            }
+            return true;
+        }
+
+        // Specific selection
         BlockSelection selection = user.getSelection(id);
         if (selection == null) {
             sender.sendMessage(ChatColor.RED + "You have input an invalid id!");
             return true;
         }
-
-        EntityTracker tracker = selection.getTracker();
-
-
-        Integer tick = -1; // All ticks
-        Integer lifespan = 80;
-        if (args.length == 3) {
-            tick = Math.abs(NumberUtils.parseInt(args[2]));
-        }
-        if (args.length == 4) {
-            lifespan = Math.abs(NumberUtils.parseInt(args[3]));
-        }
-
-        DisplayCreatorBuilder builder = new DisplayCreatorBuilder(plugin, player, selection.getId()).material(
-                tracker.getEntityType() == EntityType.FALLING_BLOCK ? Material.SAND : Material.TNT
-        ).lifespan(lifespan);
-
-        if(tick == -1) {
-            for (int i = 0; i < tracker.getLocationHistory().size(); i++) {
-                builder.location(tracker.getLocationHistory().get(i)).tick(i).build();
-            }
-        } else {
-            Location location = tracker.getLocationHistory().get(tick);
-            builder.location(location).tick(tick).build();
-        }
+        display(selection, tick, lifespan, plugin, player);
 
         return true;
     }
+
+
+    private void display(BlockSelection selection, int tick, int lifespan,  CannonDebugRebornPlugin plugin, Player player) {
+        EntityTracker tracker = selection.getTracker();
+        Material material = tracker.getEntityType() == EntityType.FALLING_BLOCK ? Material.SAND : Material.TNT;
+
+        if(tick == -1) {
+            for (int i = 0; i < tracker.getLocationHistory().size(); i++) {
+                new DisplayCreatorBuilder(plugin, player, selection.getId())
+                        .material(material)
+                        .lifespan(lifespan)
+                        .location(tracker.getLocationHistory().get(i))
+                        .tick(i)
+                        .build();
+            }
+        } else {
+            Location location = tracker.getLocationHistory().get(tick);
+            new DisplayCreatorBuilder(plugin, player, selection.getId()).material(
+                    material
+            ).lifespan(lifespan).location(location).tick(tick).build();
+        }
+    }
+
+
 
 }

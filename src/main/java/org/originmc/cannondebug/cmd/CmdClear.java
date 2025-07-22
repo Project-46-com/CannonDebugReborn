@@ -61,6 +61,7 @@ public final class CmdClear extends CommandExecutor {
 
         // Check if user wishes to delete selections.
         if (args[1].toLowerCase().startsWith("s")) {
+            user.setId(1); // reset index back to 1 :pray:
             // Update the users preview if they have preview mode toggled.
             if (user.isPreviewing()) {
                 for (BlockSelection selection : user.getSelections()) {
