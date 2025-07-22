@@ -2,12 +2,6 @@
 
 *Classic CannonDebug ported to modern minecraft versions!*
 
-## Supports
-
-* WorldEdit 7
-* PlotSquared 7
-* Paper & Forks 1.20.x
-
 ## Features
 
 * Per user cannon logging
@@ -22,10 +16,6 @@
 * Sort and filter information by
     * Server tick
     * Entities' selection ID
-
-## Download
-
-[Obtain the latest compiled version of CannonDebugReborn here](https://github.com/FragmentMC/CannonDebugReborn/releases/latest)
 
 ## Installation
 
