@@ -40,7 +40,6 @@ public final class EntityTracker {
 
     private final EntityType entityType;
 
-
     private final long spawnTick;
 
     private final List<Location> locationHistory = new ArrayList<>();

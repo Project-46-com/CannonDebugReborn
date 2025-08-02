@@ -3,11 +3,14 @@ package org.originmc.cannondebug.cmd;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.TNT;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemType;
 import org.originmc.cannondebug.BlockSelection;
 import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.EntityTracker;
@@ -34,14 +37,22 @@ public class CmdVisualise extends CommandExecutor {
         int id = Math.abs(NumberUtils.parseInt(args[1]));
 
 
-        // TDOD make this better
-        int tick = -1; // All ticks
+        int tick = -1;
         int lifespan = 80;
+
+        // Optional arguments
         if (args.length >= 3) {
-            tick = Math.abs(NumberUtils.parseInt(args[2]));
-        }
-        if (args.length >= 4) {
-            lifespan = Math.abs(NumberUtils.parseInt(args[3]));
+            for (int i = 2; i < args.length; i++) {
+                String arg = args[i];
+                if (arg.startsWith("t:")) {
+                    System.out.println("Tick arg: " + arg);
+                    tick = Math.abs(NumberUtils.parseInt(arg.substring(2)));
+                }
+                if (arg.startsWith("l:") || arg.startsWith("d:")) {
+                    System.out.println("Lifespan arg: " + arg);
+                    lifespan = NumberUtils.parseInt(arg.substring(2));
+                }
+            }
         }
 
         // All selections
@@ -59,19 +70,20 @@ public class CmdVisualise extends CommandExecutor {
             return true;
         }
         display(selection, tick, lifespan, plugin, player);
-
         return true;
     }
 
 
     private void display(BlockSelection selection, int tick, int lifespan,  CannonDebugRebornPlugin plugin, Player player) {
         EntityTracker tracker = selection.getTracker();
-        Material material = tracker.getEntityType() == EntityType.FALLING_BLOCK ? Material.SAND : Material.TNT;
+        BlockData blockData;
+        if (tracker.getEntity() instanceof FallingBlock falling) blockData = falling.getBlockData();
+        else blockData = Material.TNT.createBlockData();
 
         if(tick == -1) {
             for (int i = 0; i < tracker.getLocationHistory().size(); i++) {
                 new DisplayCreatorBuilder(plugin, player, selection.getId())
-                        .material(material)
+                        .blockData(blockData)
                         .lifespan(lifespan)
                         .location(tracker.getLocationHistory().get(i))
                         .tick(i)
@@ -79,9 +91,8 @@ public class CmdVisualise extends CommandExecutor {
             }
         } else {
             Location location = tracker.getLocationHistory().get(tick);
-            new DisplayCreatorBuilder(plugin, player, selection.getId()).material(
-                    material
-            ).lifespan(lifespan).location(location).tick(tick).build();
+            new DisplayCreatorBuilder(plugin, player, selection.getId()).blockData(blockData)
+                    .lifespan(lifespan).location(location).tick(tick).build();
         }
     }
 

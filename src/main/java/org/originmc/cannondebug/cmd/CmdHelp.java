@@ -42,6 +42,7 @@ public final class CmdHelp extends CommandExecutor {
             new FancyMessage("/c v,pre,view,preview ").color(AQUA).then("Preview all selected blocks.").color(YELLOW),
             new FancyMessage("/c r,region ").color(AQUA).then("Select all available blocks in WorldEdit region.").color(YELLOW),
             new FancyMessage("/c s,select ").color(AQUA).then("Bind block selector tool to hand.").color(YELLOW),
+            new FancyMessage("/c v,visualise").color(AQUA).then("Visualise block selector").color(YELLOW),
             new FancyMessage(""),
             new FancyMessage("This plugin was made with the intentions of providing an easy to use method of profiling cannons.").color(GREEN),
             new FancyMessage(""),

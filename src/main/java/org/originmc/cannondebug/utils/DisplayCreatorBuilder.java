@@ -6,12 +6,10 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -20,7 +18,6 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.originmc.cannondebug.BlockSelection;
 import org.originmc.cannondebug.CannonDebugRebornPlugin;
-import org.originmc.cannondebug.EntityTracker;
 import org.originmc.cannondebug.User;
 
 import java.util.UUID;
@@ -34,7 +31,7 @@ public class DisplayCreatorBuilder {
     private final Player player;
     private final int selectionID;
     private Location location;
-    private Material material;
+    private BlockData blockData = Material.TNT.createBlockData();
 
     private int lifespan = 80;
     private boolean glowing = true;
@@ -58,8 +55,8 @@ public class DisplayCreatorBuilder {
         return this;
     }
 
-    public DisplayCreatorBuilder material(Material material) {
-        this.material = material;
+    public DisplayCreatorBuilder blockData(BlockData blockData) {
+        this.blockData = blockData;
         return this;
     }
 
@@ -102,9 +99,8 @@ public class DisplayCreatorBuilder {
         if (lifespan <= 0) {
             throw new IllegalArgumentException("Visualisation entity must have a lifespan > 0");
         }
-        if (location == null || material == null) return;
+        if (location == null || blockData == null) return;
 
-        BlockData blockData = material.createBlockData();
         BlockDisplay blockDisplay = location.getWorld().spawn(location, BlockDisplay.class);
         blockDisplay.setBlock(blockData);
         blockDisplay.setGlowing(glowing);
