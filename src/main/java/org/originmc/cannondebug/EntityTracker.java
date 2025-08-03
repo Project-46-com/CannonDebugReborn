@@ -25,7 +25,9 @@
 
 package org.originmc.cannondebug;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -50,13 +52,16 @@ public final class EntityTracker {
 
     private long deathTick = -1;
 
+    @Setter(AccessLevel.NONE)
     private Entity entity;
 
     private BlockData blockData;
 
     public void setEntity(Entity entity) {
         this.entity = entity;
-        this.blockData = extractBlockData(entity);
+        if (entity != null && !entity.isDead()){
+            this.blockData = extractBlockData(entity);
+        }
     }
 
     private BlockData extractBlockData(Entity entity) {

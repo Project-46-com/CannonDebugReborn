@@ -93,33 +93,51 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void interactVisual(PlayerInteractEvent event) {
+        if(!event.getHand().equals(EquipmentSlot.HAND)) return;
+        if(!event.getAction().isLeftClick() && !event.getAction().isRightClick() || event.getHand() == null) return;
+        trace(event.getPlayer())
+                .flatMap(display -> DisplayCreatorBuilder.selectionFromEntity(CannonDebugRebornPlugin.getInstance(), display))
+                .flatMap(this::createHistoryPager)
+                .ifPresent(pager -> {
+                    CommandExecutor.send(event.getPlayer(), pager, 0);
+                    event.setCancelled(true);
+                });
+    }
 
-        trace(event).ifPresent(display -> {
-            Pair<BlockSelection, Integer> result = DisplayCreatorBuilder.selectionFromEntity(CannonDebugRebornPlugin.getInstance(), display);
+    @EventHandler
+    public void blockBreak(BlockBreakEvent event) {
+        trace(event.getPlayer())
+                .flatMap(display -> DisplayCreatorBuilder.selectionFromEntity(CannonDebugRebornPlugin.getInstance(), display))
+                .flatMap(this::createHistoryPager)
+                .ifPresent(pager -> {
+                    CommandExecutor.send(event.getPlayer(), pager, 0);
+                    event.setCancelled(true);
+                });
+    }
 
-            FancyMessage message = CmdHistoryID.getTickMessage(result.first(), result.first().getTracker().getLocationHistory().getFirst(), result.first().getTracker(), result.right());
+    private Optional<FancyPager> createHistoryPager(Pair<BlockSelection, Integer> result) {
+        var tracker = result.first().getTracker();
+        var location = tracker.getLocationHistory().getFirst();
+        FancyMessage message = CmdHistoryID.getTickMessage(result.first(), location, tracker, result.right());
 
-            FancyPager pager = new FancyPager("History for selection ID: " + result.first().getId(), new FancyMessage[]{message});
-            CommandExecutor.send(event.getPlayer(), pager, 0);
-        });
+        return Optional.of(new FancyPager(
+                "History for selection ID: " + result.first().getId(),
+                new FancyMessage[]{message}
+        ));
     }
 
 
     /**
      * Do a ray trace to find colliding BlockDisplays as they don't appear on interact events
-     * @param event
+     * @param player
      * @return a block display if one was found
      */
-    private Optional<BlockDisplay> trace(PlayerInteractEvent event) {
-        if(!event.getHand().equals(EquipmentSlot.HAND)) return Optional.empty();
-        if(!event.getAction().isLeftClick() && !event.getAction().isRightClick() || event.getHand() == null) return Optional.empty();
-
-
-        Location playerEyeLoc =  event.getPlayer().getEyeLocation();
+    private Optional<BlockDisplay> trace(Player player) {
+        Location playerEyeLoc =  player.getEyeLocation();
         Vector direction = playerEyeLoc.getDirection();
         double distance = 4.5;
 
-        RayTraceResult rayTraceResult = playerEyeLoc.getWorld().rayTrace(playerEyeLoc, direction, distance, FluidCollisionMode.NEVER, true, 0.5, entity -> entity instanceof BlockDisplay);
+        RayTraceResult rayTraceResult = playerEyeLoc.getWorld().rayTrace(playerEyeLoc, direction, distance, FluidCollisionMode.NEVER, true, 1, entity -> entity instanceof BlockDisplay);
         if (rayTraceResult == null) return Optional.empty();
         Entity collidingEntity = rayTraceResult.getHitEntity();
         if(collidingEntity == null) return Optional.empty();
