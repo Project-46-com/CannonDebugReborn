@@ -45,11 +45,9 @@ public class CmdVisualise extends CommandExecutor {
             for (int i = 2; i < args.length; i++) {
                 String arg = args[i];
                 if (arg.startsWith("t:")) {
-                    System.out.println("Tick arg: " + arg);
                     tick = Math.abs(NumberUtils.parseInt(arg.substring(2)));
                 }
                 if (arg.startsWith("l:") || arg.startsWith("d:")) {
-                    System.out.println("Lifespan arg: " + arg);
                     lifespan = NumberUtils.parseInt(arg.substring(2));
                 }
             }
@@ -76,14 +74,10 @@ public class CmdVisualise extends CommandExecutor {
 
     private void display(BlockSelection selection, int tick, int lifespan,  CannonDebugRebornPlugin plugin, Player player) {
         EntityTracker tracker = selection.getTracker();
-        BlockData blockData;
-        if (tracker.getEntity() instanceof FallingBlock falling) blockData = falling.getBlockData();
-        else blockData = Material.TNT.createBlockData();
-
         if(tick == -1) {
             for (int i = 0; i < tracker.getLocationHistory().size(); i++) {
                 new DisplayCreatorBuilder(plugin, player, selection.getId())
-                        .blockData(blockData)
+                        .blockData(tracker.getBlockData())
                         .lifespan(lifespan)
                         .location(tracker.getLocationHistory().get(i))
                         .tick(i)
@@ -91,7 +85,7 @@ public class CmdVisualise extends CommandExecutor {
             }
         } else {
             Location location = tracker.getLocationHistory().get(tick);
-            new DisplayCreatorBuilder(plugin, player, selection.getId()).blockData(blockData)
+            new DisplayCreatorBuilder(plugin, player, selection.getId()).blockData(tracker.getBlockData())
                     .lifespan(lifespan).location(location).tick(tick).build();
         }
     }

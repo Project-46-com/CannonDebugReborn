@@ -28,8 +28,10 @@ package org.originmc.cannondebug;
 import lombok.Data;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -50,5 +52,19 @@ public final class EntityTracker {
 
     private Entity entity;
 
+    private BlockData blockData;
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+        this.blockData = extractBlockData(entity);
+    }
+
+    private BlockData extractBlockData(Entity entity) {
+        if (entity instanceof FallingBlock falling) {
+            return falling.getBlockData();
+        } else {
+            return Material.TNT.createBlockData();
+        }
+    }
 
 }

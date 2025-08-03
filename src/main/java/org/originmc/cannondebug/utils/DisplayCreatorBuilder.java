@@ -31,7 +31,7 @@ public class DisplayCreatorBuilder {
     private final Player player;
     private final int selectionID;
     private Location location;
-    private BlockData blockData = Material.TNT.createBlockData();
+    private BlockData blockData;
 
     private int lifespan = 80;
     private boolean glowing = true;
