@@ -10,6 +10,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -20,6 +21,7 @@ import org.originmc.cannondebug.BlockSelection;
 import org.originmc.cannondebug.CannonDebugRebornPlugin;
 import org.originmc.cannondebug.User;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Getter
@@ -79,15 +81,17 @@ public class DisplayCreatorBuilder {
         entity.getPersistentDataContainer().set(CannonDebugRebornPlugin.getInstance().getDebugKey(), PersistentDataType.STRING, this.player.getUniqueId() + ":" + this.tick + ":" + this.selectionID);
     }
 
-    public static Pair<BlockSelection, Integer> selectionFromEntity(CannonDebugRebornPlugin plugin, Entity entity) {
-        String[] data = entity.getPersistentDataContainer().get(plugin.getDebugKey(), PersistentDataType.STRING).split(":");
-        if (data.length != 3) return null;
+    public static Optional<Pair<BlockSelection, Integer>> selectionFromEntity(CannonDebugRebornPlugin plugin, Entity entity) {
+        String pdcStringData = entity.getPersistentDataContainer().get(plugin.getDebugKey(), PersistentDataType.STRING);
+        if(pdcStringData == null) return Optional.empty();
+        String[] data = pdcStringData.split(":");
+        if (data.length != 3) return Optional.empty();
         UUID uuid = UUID.fromString(data[0]);
         Integer tick = Integer.parseInt(data[1]);
         Integer selectionID = Integer.parseInt(data[2]);
 
         User user = plugin.getUser(uuid);
-       return Pair.of(user.getSelection(selectionID), tick);
+       return Optional.of(Pair.of(user.getSelection(selectionID), tick));
     }
 
 
