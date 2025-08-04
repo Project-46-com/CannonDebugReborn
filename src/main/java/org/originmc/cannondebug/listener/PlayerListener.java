@@ -93,8 +93,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void interactVisual(PlayerInteractEvent event) {
+        if(event.getHand() == null) return;
         if(!event.getHand().equals(EquipmentSlot.HAND)) return;
-        if(!event.getAction().isLeftClick() && !event.getAction().isRightClick() || event.getHand() == null) return;
+        if(!event.getAction().isLeftClick() && !event.getAction().isRightClick()) return;
         trace(event.getPlayer())
                 .flatMap(display -> DisplayCreatorBuilder.selectionFromEntity(CannonDebugRebornPlugin.getInstance(), display))
                 .flatMap(this::createHistoryPager)
