@@ -1,5 +1,6 @@
 package org.originmc.cannondebug.listener;
 
+import com.project46.core.events.EntityDispenseEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -9,6 +10,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -83,6 +85,35 @@ public class WorldListener implements Listener {
                 // Add entity tracker to user selection
                 selection.setTracker(tracker);
             }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void startProfilingCustom(EntityDispenseEvent e) {
+        System.out.println("Custom Profiling");
+        BlockSelection selection;
+        EntityTracker tracker = null;
+        for (User user : plugin.getUsers().values()) {
+            // Do nothing if user is not attempting to profile current block.
+            selection = user.getSelection(e.getDispenser().getLocation());
+            if (selection == null) {
+                continue;
+            }
+
+            // Build a new tracker due to it being used.
+            if (tracker == null) {
+
+                // Add spawned entity to tracker
+                tracker = new EntityTracker(e.getSpawned().getType(), plugin.getCurrentTick());
+                tracker.setEntity(e.getSpawned());
+                plugin.getActiveTrackers().add(tracker);
+            }
+
+            // Update order
+            selection.setOrder(user.getAndIncOrder());
+
+            // Add block tracker to user.
+            selection.setTracker(tracker);
         }
     }
 

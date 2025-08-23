@@ -174,6 +174,16 @@ public final class CmdHistoryTick extends CommandExecutor {
                         .formattedTooltip(new FancyMessage("This entity is moving fast [>= 8.0, cannot swing]"));
             }
 
+            String visualiseCommand = "/c v " + selection.getId() + " t:" + relativeTick + " l:120";
+            message.then("V")
+                    .color(BLUE)
+                    .formattedTooltip(
+                            new FancyMessage("Click this to visualise the position"),
+                            new FancyMessage("A highlighted entity will be spawned for 120 ticks"),
+                            new FancyMessage("Try: ").color(WHITE).then(visualiseCommand).color(GRAY)
+                    )
+                    .command(visualiseCommand);
+
             message.then("]")
                     .color(DARK_GRAY);
 
