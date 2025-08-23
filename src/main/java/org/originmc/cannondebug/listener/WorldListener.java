@@ -90,7 +90,6 @@ public class WorldListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void startProfilingCustom(EntityDispenseEvent e) {
-        System.out.println("Custom Profiling");
         BlockSelection selection;
         EntityTracker tracker = null;
         for (User user : plugin.getUsers().values()) {
